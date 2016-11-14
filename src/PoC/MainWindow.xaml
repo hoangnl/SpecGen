@@ -1,0 +1,35 @@
+﻿<Window x:Class="Test.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="BJSS Generator" 
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        Height="500"
+		Width="600">
+    <Window.Resources>
+        <avalonedit:HighlightingDefinitionTypeConverter x:Key="HighlightingDefinitionConverter" />
+    </Window.Resources>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <avalonedit:TextEditor ShowLineNumbers="True" 
+                                 x:Name="UserStoryEntryBox"
+                                 Grid.Column="0"
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Stretch" />
+
+        <avalonedit:TextEditor x:Name="GeneratedOutput"
+                             Grid.Column="1"
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" />
+
+        <Button Grid.Column="1" Grid.Row="1" Click="Button_Click">Generate Template</Button>
+
+    </Grid>
+
+</Window>
