@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
 using com.bjss.generator.Model;
@@ -26,6 +27,9 @@ namespace Test
 
             ApplySpecGenSyntaxHighlightingToEditor(UserStoryEntryBox);
             GeneratedOutput.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
+            UsingsBlock.Text = string.Join("\n", StoryDocument.DefaultUsings);
+            Namespace.Text = StoryDocument.DefaultNamespace;
+            Target.Text = StoryDocument.DefaultTarget;
         }
 
         private void ApplySpecGenSyntaxHighlightingToEditor(TextEditor editor)
@@ -52,7 +56,17 @@ namespace Test
             }
             try
             {
-                var doc = new StoryDocument(UserStoryEntryBox.Text);
+                var doc = new StoryDocument(UserStoryEntryBox.Text)
+                {
+                    Namespace = Namespace.Text,
+                    Target = Target.Text
+                };
+
+                foreach (var usingNs in UsingsBlock.Text.Split('\n'))
+                {
+                    doc.Usings.Add(usingNs);
+                }
+
                 if (doc.Errors.Any())
                 {
                     var sb = new StringBuilder();
@@ -67,17 +81,22 @@ namespace Test
 
                 var ttTemplate = new SpecGenTemplate
                 {
-                    Session = new Dictionary<string, object> {{"Story", doc.Story}}
+                    Session = new Dictionary<string, object>
+                    {
+                        { "Story", doc.Story },
+                        { "StoryDoc", doc }
+                    }
                 };
 
                 ttTemplate.Initialize();
 
                 GeneratedOutput.Document.Text = ttTemplate.TransformText();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
+                GeneratedOutput.Document.Text = ex.ToString();
             }
         }
+
     }
 }

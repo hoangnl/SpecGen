@@ -8,12 +8,10 @@
 <#@ import namespace="System.Globalization" #>
 <#@ output extension=".txt" #>
 <#@ parameter type="com.bjss.generator.Model.StoryNode" name="Story" #>
-using System;
-using BddfySpecGen.ATM;
-using Specify.Stories;
-using TestStack.BDDfy;
+<#@ parameter type="com.bjss.generator.Model.StoryDocument" name="StoryDoc" #>
+<#= string.Join(Environment.NewLine, this.StoryDoc.Usings.Select(x => string.Format("using {0};", x))) #>
 
-namespace BddfySpecGen
+namespace <#= this.StoryDoc.Namespace #>
 {
     public class <#= this.GetFormatedName(this.Story.Title.Text, "") #> : UserStory
     {
@@ -28,16 +26,17 @@ namespace BddfySpecGen
     foreach (var scenario in this.Story.Scenarios)
     {
 #>
-    public class <#= this.GetFormatedName(scenario.Title.Text, "") #> : ScenarioFor<object,  <#= this.GetFormatedName(this.Story.Title.Text, "") #>>
+    public class <#= this.GetFormatedName(scenario.Title.Text, "") #> : ScenarioFor<<#= this.StoryDoc.Target #>,  <#= this.GetFormatedName(this.Story.Title.Text, "") #>>
     {
 <#
     foreach (var step in scenario.Steps)
     {
 #>
-        <#= GetAttribute(step.Text) #>public void <#= this.GetFormatedName(step.Text, "_") #>()
+        <#= GetAttribute(step.Group, step.Addition, step.Text) #>public void <#= this.GetFormatedName(step.Group, step.Addition, step.Text, "_") #>()
         {
             throw new NotImplementedException();
         }
+
 <#        
     }
 #>
@@ -48,36 +47,46 @@ namespace BddfySpecGen
 #>
 }
 <#+
-	private string GetFormatedName(string name , string replaceSpacesWith)
+	private string GetFormatedName(string name, string replaceSpacesWith)
+    {
+        return GetFormatedName("", "",  name, replaceSpacesWith);
+    }
+
+	private string GetFormatedName(string @group, string addition,  string name, string replaceSpacesWith)
     {
 		TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-        return GenerateClassName(textInfo.ToTitleCase(name), replaceSpacesWith);
+		string proposedName = GenerateClassName(textInfo.ToTitleCase(name), replaceSpacesWith);
+
+		if ((@group ?? string.Empty).Length > 0 && proposedName.StartsWith(@group))
+        {
+			proposedName = proposedName.Substring(@group.Length);
+        } 
+		if ((addition ?? string.Empty).Length > 0 && proposedName.StartsWith(addition))
+        {
+			proposedName = proposedName.Substring(addition.Length);
+        } 
+
+        return string.Format("{0}{1}{2}", addition, @group, proposedName) ;
     }
 
-	private string GetAttribute(string text)
+	private string GetAttribute(string scenario, string addition, string text)
 	{
-	    string prefix = String.Empty;
-        if (text.StartsWith("Given"))
-        {
-            prefix = "Given";
-        }
-        else if (text.StartsWith("When"))
-        {
-            prefix = "When";
-        }
-        else if (text.StartsWith("Then"))
-        {
-            prefix = "Then";
-        }
-
-	    return !string.IsNullOrEmpty(prefix)
+	    return string.IsNullOrEmpty((scenario ?? string.Empty) + (addition ?? string.Empty))
+			  || !IsAttributeRequired(text)  
 	        ? string.Empty
-	        : string.Format("[{0}(\"{1}\")]\r\n        ", prefix, text);
+	        : string.Format("[{0}{1}(\"{2}\")]{3}        ", addition, scenario, text, Environment.NewLine);
     }
+
+	private static bool IsAttributeRequired(string value)
+	{
+		Regex regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
+		return regex.IsMatch(value.Replace(" ", "").Replace("\t", ""));
+	}
 
 	private static string GenerateClassName(string value, string replaceSpacesWith)
 	{
 		var className = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value).Replace("$", "Dollars ").Replace("£ ", "Pounds");
+		
 		var ret = className;
 		bool isValid = Microsoft.CSharp.CSharpCodeProvider.CreateProvider("C#").IsValidIdentifier(className);
 
@@ -94,6 +103,6 @@ namespace BddfySpecGen
 			}
 		}
 
-		return ret.Replace(" ", replaceSpacesWith);
+		return ret.Replace(" ", replaceSpacesWith).Replace("\t", replaceSpacesWith);
 	}
 #>

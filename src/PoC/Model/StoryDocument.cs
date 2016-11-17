@@ -8,8 +8,13 @@ namespace com.bjss.generator.Model
 {
     public class StoryDocument
     {
-        private Regex _stepIdentifier = new Regex(@"^\s*(Given|Then|Transform|When|And|But)", RegexOptions.Singleline | RegexOptions.Compiled);
+        private readonly Regex _stepIdentifier = new Regex(@"^\s*(Given|Then|Transform|When|And|But)", RegexOptions.Singleline | RegexOptions.Compiled);
+        private readonly Regex _stepGroupIdentifier = new Regex(@"^\s*(Given|Then|Transform|When)", RegexOptions.Singleline | RegexOptions.Compiled);
+        private readonly Regex _stepAdditionIdentifier = new Regex(@"^\s*(And|But)", RegexOptions.Singleline | RegexOptions.Compiled);
 
+        public static IList<string> DefaultUsings = new List<string> {"System", "Specify.Stories", "TestStack.BDDfy"};
+        public static string DefaultNamespace = "BddfySpecGen";
+        public static string DefaultTarget = "object";
 
         public StoryDocument(string contents)
         {
@@ -30,6 +35,12 @@ namespace com.bjss.generator.Model
                     : new StoryNode(this);
             }
         }
+
+        public IList<string> Usings { get; private set; } = new List<string>();
+
+        public string Namespace { get; set; }
+
+        public string Target { get; set; }
 
         public ObservableCollection<Error> Errors { get; }
 
@@ -62,6 +73,8 @@ namespace com.bjss.generator.Model
             }
             else
             {
+                var group = string.Empty;
+
                 foreach (var line in Lines)
                 {
                     if (line.Type == LineType.Empty)
@@ -73,10 +86,26 @@ namespace com.bjss.generator.Model
 
                     if (isStepLine)
                     {
+                        var groupMatch = _stepGroupIdentifier.Match(line.Text);
+                        if (groupMatch.Success)
+                        {
+                            group = groupMatch.Value;
+                        }
+                        else
+                        {
+                            var additionMatch = _stepAdditionIdentifier.Match(line.Text);
+                            if (additionMatch.Success)
+                            {
+                                line.Addition = additionMatch.Value;
+                            }
+                        }
+
                         line.Type = LineType.Step;
+                        line.Group = group;
                     }
                     else if (ParseMataDataLines(line))
                     {
+                        group = string.Empty; 
                         return;
                     }
                 }

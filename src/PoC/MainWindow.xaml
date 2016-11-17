@@ -6,6 +6,7 @@
 		Width="600">
     <Window.Resources>
         <avalonedit:HighlightingDefinitionTypeConverter x:Key="HighlightingDefinitionConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -27,9 +28,38 @@
                              Grid.Column="1"
                              HorizontalAlignment="Stretch" 
                              VerticalAlignment="Stretch" />
+        <Border BorderBrush="#88000000" 
+                BorderThickness="40" 
+                Padding="10" 
+                Grid.Column="0" 
+                Grid.ColumnSpan="2" 
+                Grid.Row="0"
+                Visibility="{Binding Path=IsChecked, ElementName=SettingsToggle, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Background="WhiteSmoke"  >
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label  Grid.Column="0" Grid.Row="0">Namespace:</Label>
+                <TextBox x:Name="Namespace" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5"></TextBox>
+                <Label  Grid.Column="0" Grid.Row="1">Target:</Label>
+                <TextBox x:Name="Target" Grid.Column="1" Grid.Row="1" Margin="0,0,0,5"></TextBox>
+                <Label Grid.Column="0" Grid.Row="2">Usings:</Label>
+                <TextBox x:Name="UsingsBlock" Grid.Column="1" Grid.Row="2" AcceptsReturn="True"></TextBox>
+            </Grid>
+        </Border>
+        
         <Button Grid.Column="1" Grid.Row="1" Click="Button_Click">Generate Template</Button>
 
+        <ToggleButton x:Name="SettingsToggle" Grid.Column="0" Grid.Row="1">Template Settings</ToggleButton>
     </Grid>
+
 
 </Window>

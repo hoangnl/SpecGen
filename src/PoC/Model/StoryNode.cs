@@ -13,8 +13,11 @@ namespace com.bjss.generator.Model
         }
 
         public Line Title => _document.Lines.FirstOrDefault(x => x.Type == LineType.StoryTitle);
+
         public Line AsA => _document.Lines.FirstOrDefault(x => x.Type == LineType.StoryActorOrRole);
+
         public Line IWant => _document.Lines.FirstOrDefault(x => x.Type == LineType.StoryActorDesiredAction);
+
         public Line SoThat => _document.Lines.FirstOrDefault(x => x.Type == LineType.StoryActorDesiredOutcome);
 
         public Scenario[] Scenarios => _document.GetScenarios();

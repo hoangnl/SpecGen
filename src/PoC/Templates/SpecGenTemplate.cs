@@ -31,45 +31,57 @@ namespace com.bjss.generator.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing BddfySpecGen.ATM;\r\nusing Specify.Stories;\r\nusing TestStack.B" +
-                    "DDfy;\r\n\r\nnamespace BddfySpecGen\r\n{\r\n    public class ");
             
-            #line 18 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 12 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(Environment.NewLine, this.StoryDoc.Usings.Select(x => string.Format("using {0};", x)))));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\r\nnamespace ");
+            
+            #line 14 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.StoryDoc.Namespace));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n    public class ");
+            
+            #line 16 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(this.Story.Title.Text, "")));
             
             #line default
             #line hidden
             this.Write(" : UserStory\r\n    {\r\n        public ");
             
-            #line 20 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 18 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(this.Story.Title.Text, "")));
             
             #line default
             #line hidden
             this.Write("()\r\n        {\r\n            AsA = \"");
             
-            #line 22 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 20 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.Story.AsA.Text));
             
             #line default
             #line hidden
             this.Write("\";\r\n            IWant = \"");
             
-            #line 23 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 21 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.Story.IWant.Text));
             
             #line default
             #line hidden
             this.Write("\";\r\n            SoThat = \"");
             
-            #line 24 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 22 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.Story.SoThat.Text));
             
             #line default
             #line hidden
             this.Write("\";\r\n        }\r\n    }\r\n");
             
-            #line 27 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 25 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
 
     foreach (var scenario in this.Story.Scenarios)
     {
@@ -79,21 +91,28 @@ namespace com.bjss.generator.Templates
             #line hidden
             this.Write("    public class ");
             
-            #line 31 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 29 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(scenario.Title.Text, "")));
             
             #line default
             #line hidden
-            this.Write(" : ScenarioFor<object,  ");
+            this.Write(" : ScenarioFor<");
             
-            #line 31 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 29 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.StoryDoc.Target));
+            
+            #line default
+            #line hidden
+            this.Write(",  ");
+            
+            #line 29 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(this.Story.Title.Text, "")));
             
             #line default
             #line hidden
             this.Write(">\r\n    {\r\n");
             
-            #line 33 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 31 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
 
     foreach (var step in scenario.Steps)
     {
@@ -103,21 +122,21 @@ namespace com.bjss.generator.Templates
             #line hidden
             this.Write("        ");
             
-            #line 37 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetAttribute(step.Text)));
+            #line 35 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetAttribute(step.Group, step.Addition, step.Text)));
             
             #line default
             #line hidden
             this.Write("public void ");
             
-            #line 37 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(step.Text, "_")));
+            #line 35 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(step.Group, step.Addition, step.Text, "_")));
             
             #line default
             #line hidden
-            this.Write("()\r\n        {\r\n            throw new NotImplementedException();\r\n        }\r\n");
+            this.Write("()\r\n        {\r\n            throw new NotImplementedException();\r\n        }\r\n\r\n");
             
-            #line 41 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 40 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
         
     }
 
@@ -126,7 +145,7 @@ namespace com.bjss.generator.Templates
             #line hidden
             this.Write("    }\r\n\r\n");
             
-            #line 46 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 45 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
         
     }
 
@@ -137,38 +156,48 @@ namespace com.bjss.generator.Templates
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 50 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+        #line 49 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
 
-	private string GetFormatedName(string name , string replaceSpacesWith)
+	private string GetFormatedName(string name, string replaceSpacesWith)
+    {
+        return GetFormatedName("", "",  name, replaceSpacesWith);
+    }
+
+	private string GetFormatedName(string @group, string addition,  string name, string replaceSpacesWith)
     {
 		TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-        return GenerateClassName(textInfo.ToTitleCase(name), replaceSpacesWith);
+		string proposedName = GenerateClassName(textInfo.ToTitleCase(name), replaceSpacesWith);
+
+		if ((@group ?? string.Empty).Length > 0 && proposedName.StartsWith(@group))
+        {
+			proposedName = proposedName.Substring(@group.Length);
+        } 
+		if ((addition ?? string.Empty).Length > 0 && proposedName.StartsWith(addition))
+        {
+			proposedName = proposedName.Substring(addition.Length);
+        } 
+
+        return string.Format("{0}{1}{2}", addition, @group, proposedName) ;
     }
 
-	private string GetAttribute(string text)
+	private string GetAttribute(string scenario, string addition, string text)
 	{
-	    string prefix = String.Empty;
-        if (text.StartsWith("Given"))
-        {
-            prefix = "Given";
-        }
-        else if (text.StartsWith("When"))
-        {
-            prefix = "When";
-        }
-        else if (text.StartsWith("Then"))
-        {
-            prefix = "Then";
-        }
-
-	    return !string.IsNullOrEmpty(prefix)
+	    return string.IsNullOrEmpty((scenario ?? string.Empty) + (addition ?? string.Empty))
+			  || !IsAttributeRequired(text)  
 	        ? string.Empty
-	        : string.Format("[{0}(\"{1}\")]\r\n        ", prefix, text);
+	        : string.Format("[{0}{1}(\"{2}\")]{3}        ", addition, scenario, text, Environment.NewLine);
     }
+
+	private static bool IsAttributeRequired(string value)
+	{
+		Regex regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
+		return regex.IsMatch(value.Replace(" ", "").Replace("\t", ""));
+	}
 
 	private static string GenerateClassName(string value, string replaceSpacesWith)
 	{
 		var className = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value).Replace("$", "Dollars ").Replace("£ ", "Pounds");
+		
 		var ret = className;
 		bool isValid = Microsoft.CSharp.CSharpCodeProvider.CreateProvider("C#").IsValidIdentifier(className);
 
@@ -185,7 +214,7 @@ namespace com.bjss.generator.Templates
 			}
 		}
 
-		return ret.Replace(" ", replaceSpacesWith);
+		return ret.Replace(" ", replaceSpacesWith).Replace("\t", replaceSpacesWith);
 	}
 
         
@@ -204,6 +233,19 @@ private global::com.bjss.generator.Model.StoryNode Story
     get
     {
         return this._StoryField;
+    }
+}
+
+private global::com.bjss.generator.Model.StoryDocument _StoryDocField;
+
+/// <summary>
+/// Access the StoryDoc parameter of the template.
+/// </summary>
+private global::com.bjss.generator.Model.StoryDocument StoryDoc
+{
+    get
+    {
+        return this._StoryDocField;
     }
 }
 
@@ -227,6 +269,20 @@ if ((StoryValueAcquired == false))
     if ((data != null))
     {
         this._StoryField = ((global::com.bjss.generator.Model.StoryNode)(data));
+    }
+}
+bool StoryDocValueAcquired = false;
+if (this.Session.ContainsKey("StoryDoc"))
+{
+    this._StoryDocField = ((global::com.bjss.generator.Model.StoryDocument)(this.Session["StoryDoc"]));
+    StoryDocValueAcquired = true;
+}
+if ((StoryDocValueAcquired == false))
+{
+    object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("StoryDoc");
+    if ((data != null))
+    {
+        this._StoryDocField = ((global::com.bjss.generator.Model.StoryDocument)(data));
     }
 }
 
