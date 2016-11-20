@@ -158,6 +158,11 @@ namespace com.bjss.generator.Templates
         
         #line 49 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
 
+	private Regex CSharpIdentifierValidation 
+	{
+		get { return new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]", RegexOptions.Compiled); }
+    }
+
 	private string GetFormatedName(string name, string replaceSpacesWith)
     {
         return GetFormatedName("", "",  name, replaceSpacesWith);
@@ -188,15 +193,14 @@ namespace com.bjss.generator.Templates
 	        : string.Format("[{0}{1}(\"{2}\")]{3}        ", addition, scenario, text, Environment.NewLine);
     }
 
-	private static bool IsAttributeRequired(string value)
+	private bool IsAttributeRequired(string value)
 	{
-		Regex regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
-		return regex.IsMatch(value.Replace(" ", "").Replace("\t", ""));
+		return CSharpIdentifierValidation.IsMatch(CleanWhiteSpaces(value, ""));
 	}
 
-	private static string GenerateClassName(string value, string replaceSpacesWith)
+	private string GenerateClassName(string value, string replaceSpacesWith)
 	{
-		var className = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value).Replace("$", "Dollars ").Replace("£ ", "Pounds");
+		var className = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(MakeMoreReadable(value));
 		
 		var ret = className;
 		bool isValid = Microsoft.CSharp.CSharpCodeProvider.CreateProvider("C#").IsValidIdentifier(className);
@@ -204,8 +208,7 @@ namespace com.bjss.generator.Templates
 		if (!isValid)
 		{ 
 			// File name contains invalid chars, remove them
-			Regex regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
-			ret = regex.Replace(className, "");
+			ret = CSharpIdentifierValidation.Replace(className, string.Empty);
 
 			// Class name doesn't begin with a letter, insert an underscore
 			if (!char.IsLetter(ret, 0))
@@ -214,8 +217,20 @@ namespace com.bjss.generator.Templates
 			}
 		}
 
-		return ret.Replace(" ", replaceSpacesWith).Replace("\t", replaceSpacesWith);
+		ret = CleanWhiteSpaces(ret, replaceSpacesWith);
+		isValid = Microsoft.CSharp.CSharpCodeProvider.CreateProvider("C#").IsValidIdentifier(ret);
+		return isValid ? ret : "@" + ret;
 	}
+
+	private string CleanWhiteSpaces(string str, string whiteSpaceReplacement)
+    {
+        return StoryDoc.StringsToBeRemoved.Aggregate(str, (current, toReplace) => current.Replace(toReplace, whiteSpaceReplacement));
+    }
+
+	private string MakeMoreReadable(string str)
+    {
+        return StoryDoc.StringsToBeReplaced.Keys.Aggregate(str, (current, toReplace) => current.Replace(toReplace, StoryDoc.StringsToBeReplaced[toReplace]));
+    }
 
         
         #line default

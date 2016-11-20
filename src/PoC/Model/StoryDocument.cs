@@ -36,6 +36,19 @@ namespace com.bjss.generator.Model
             }
         }
 
+        public string[] StringsToBeRemoved { get; private set; } = new string[] { " ", "\t", "\n", "\r", };
+
+        public IDictionary<string, string> StringsToBeReplaced { get; private set; } = new Dictionary<string, string>()
+                                                                              {
+                                                                                  {"$", "Dollars"},
+                                                                                  {"£", "Pounds"},
+                                                                                  {"&", "And"},
+                                                                                  {"/", "DividedBy"},
+                                                                                  {"*", "MultipliedBy"},
+                                                                                  {"-", "Minus"},
+                                                                                  {"+", "Plus"}
+                                                                              };
+
         public IList<string> Usings { get; private set; } = new List<string>();
 
         public string Namespace { get; set; }
@@ -103,10 +116,13 @@ namespace com.bjss.generator.Model
                         line.Type = LineType.Step;
                         line.Group = group;
                     }
-                    else if (ParseMataDataLines(line))
+                    else if (!ParseMataDataLines(line))
                     {
-                        group = string.Empty; 
                         return;
+                    }
+                    else
+                    {
+                        group = string.Empty;
                     }
                 }
 
@@ -136,7 +152,7 @@ namespace com.bjss.generator.Model
                     if (Lines.Any(x => x.LineNumber < line1.LineNumber && x.Type != LineType.Empty))
                     {
                         Errors.Add(new Error(line.Location, "Story title is blank/empty"));
-                        return true;
+                        return false;
                     }
 
                     line.Type = LineType.StoryTitle;
@@ -146,14 +162,14 @@ namespace com.bjss.generator.Model
                     if (Lines[line.LineNumber - 1].Type == LineType.Empty)
                     {
                         Errors.Add(new Error(line.Location, "Scenario title must be preceeded buy a blank line"));
-                        return true;
+                        return false;
                     }
 
                     line.Type = LineType.ScenarioTitle;
                 }
             }
 
-            return false;
+            return true;
         }
 
         private void ValidateParsedResults()
