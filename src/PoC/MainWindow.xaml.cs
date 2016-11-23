@@ -92,6 +92,11 @@ namespace Test
 
         private void BackgroundWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (_backgroundWorker == null)
+            {
+                return;
+            }
+
             _backgroundWorker.DoWork -= BackgroundWorkerOnDoWork;
             _backgroundWorker.ProgressChanged -= BackgroundWorkerOnProgressChanged;
             _backgroundWorker.RunWorkerCompleted -= BackgroundWorkerCompleted;

@@ -170,16 +170,15 @@ namespace com.bjss.generator.Templates
 
 	private string GetFormatedName(string @group, string addition,  string name, string replaceSpacesWith)
     {
-		TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-		string proposedName = GenerateClassName(textInfo.ToTitleCase(name), replaceSpacesWith);
+		string proposedName = GenerateClassName(name, replaceSpacesWith);
 
 		if ((@group ?? string.Empty).Length > 0 && proposedName.StartsWith(@group))
         {
-			proposedName = proposedName.Substring(@group.Length);
+			proposedName = proposedName.Substring(@group.Length).Trim();
         } 
 		if ((addition ?? string.Empty).Length > 0 && proposedName.StartsWith(addition))
         {
-			proposedName = proposedName.Substring(addition.Length);
+			proposedName = proposedName.Substring(addition.Length).Trim();
         } 
 
         return string.Format("{0}{1}{2}", addition, @group, proposedName) ;
@@ -200,7 +199,7 @@ namespace com.bjss.generator.Templates
 
 	private string GenerateClassName(string value, string replaceSpacesWith)
 	{
-		var className = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(MakeMoreReadable(value));
+		var className = CleanWhiteSpaces(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(MakeMoreReadable(value)), replaceSpacesWith);
 		
 		var ret = className;
 		bool isValid = Microsoft.CSharp.CSharpCodeProvider.CreateProvider("C#").IsValidIdentifier(className);
@@ -217,14 +216,15 @@ namespace com.bjss.generator.Templates
 			}
 		}
 
-		ret = CleanWhiteSpaces(ret, replaceSpacesWith);
+		//ret = CleanWhiteSpaces(ret, replaceSpacesWith);
 		isValid = Microsoft.CSharp.CSharpCodeProvider.CreateProvider("C#").IsValidIdentifier(ret);
 		return isValid ? ret : "@" + ret;
 	}
 
 	private string CleanWhiteSpaces(string str, string whiteSpaceReplacement)
     {
-        return StoryDoc.StringsToBeRemoved.Aggregate(str, (current, toReplace) => current.Replace(toReplace, whiteSpaceReplacement));
+		var tempStr = Regex.Replace(str, @"\s+", whiteSpaceReplacement);
+        return StoryDoc.StringsToBeRemoved.Aggregate(tempStr, (current, toReplace) => current.Replace(toReplace, whiteSpaceReplacement));
     }
 
 	private string MakeMoreReadable(string str)

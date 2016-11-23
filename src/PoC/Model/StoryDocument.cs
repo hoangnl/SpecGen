@@ -46,7 +46,8 @@ namespace com.bjss.generator.Model
                                                                                   {"/", "DividedBy"},
                                                                                   {"*", "MultipliedBy"},
                                                                                   {"-", "Minus"},
-                                                                                  {"+", "Plus"}
+                                                                                  {"+", "Plus"},
+                                                                                  {"%", "Percent" }
                                                                               };
 
         public IList<string> Usings { get; private set; } = new List<string>();
@@ -63,12 +64,12 @@ namespace com.bjss.generator.Model
             {
                 var lineNum = 0;
                 string line;
-                while ((line = reader.ReadLine()) != null)
+                while ((line = reader.ReadLine()?.Trim()) != null)
                 {
                     lineNum++;
                     yield return new Line
                     {
-                        Type = string.IsNullOrEmpty(line.Trim()) ? LineType.Empty : LineType.Unknown,
+                        Type = string.IsNullOrEmpty(line) ? LineType.Empty : LineType.Unknown,
                         Text = line,
                         Location = new Location(lineNum)
                     };
