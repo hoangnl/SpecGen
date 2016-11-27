@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace com.bjss.generator.Model
+namespace SpecGen.Model
 {
     [Serializable]
     [DebuggerDisplay("{Type}   |   {Addition} {Group} -> {Text}")]

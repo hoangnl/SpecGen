@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace com.bjss.generator.Model
+namespace SpecGen.Model
 {
     public class StoryDocument
     {

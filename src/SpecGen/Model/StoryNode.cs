@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace com.bjss.generator.Model
+namespace SpecGen.Model
 {
     public class StoryNode : MarshalByRefObject
     {

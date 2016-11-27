@@ -1,8 +1,7 @@
 # SpecGen
 Converts textual scenarios to code
 
-## Proof of Concept
-To PoC aims to take a story in the format:
+Takes a story in the format:
 
 ```
 Account holder withdraws cash

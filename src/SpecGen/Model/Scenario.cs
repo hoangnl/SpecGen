@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace com.bjss.generator.Model
+namespace SpecGen.Model
 {
     public class Scenario : MarshalByRefObject
     {

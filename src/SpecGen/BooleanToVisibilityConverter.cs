@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace com.bjss.generator
+namespace SpecGen
 {
     public class BooleanToVisibilityConverter : IValueConverter
     {

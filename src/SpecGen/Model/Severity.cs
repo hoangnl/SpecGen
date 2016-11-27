@@ -1,4 +1,4 @@
-﻿namespace com.bjss.generator.Model
+﻿namespace SpecGen.Model
 {
     public enum Severity
     {

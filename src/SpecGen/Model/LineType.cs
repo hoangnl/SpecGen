@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace com.bjss.generator.Model
+namespace SpecGen.Model
 {
     [Serializable]
     public enum LineType

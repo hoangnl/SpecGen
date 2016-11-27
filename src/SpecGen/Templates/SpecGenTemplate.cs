@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace com.bjss.generator.Templates
+namespace SpecGen.Templates
 {
     using System.Linq;
     using System.Text;
@@ -21,7 +21,7 @@ namespace com.bjss.generator.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+    #line 1 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class SpecGenTemplate : SpecGenTemplateBase
     {
@@ -32,56 +32,56 @@ namespace com.bjss.generator.Templates
         public virtual string TransformText()
         {
             
-            #line 12 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 12 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(Environment.NewLine, this.StoryDoc.Usings.Select(x => string.Format("using {0};", x)))));
             
             #line default
             #line hidden
             this.Write("\r\n\r\nnamespace ");
             
-            #line 14 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 14 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.StoryDoc.Namespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public class ");
             
-            #line 16 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 16 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(this.Story.Title.Text, "")));
             
             #line default
             #line hidden
             this.Write(" : UserStory\r\n    {\r\n        public ");
             
-            #line 18 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 18 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(this.Story.Title.Text, "")));
             
             #line default
             #line hidden
             this.Write("()\r\n        {\r\n            AsA = \"");
             
-            #line 20 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 20 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.Story.AsA.Text));
             
             #line default
             #line hidden
             this.Write("\";\r\n            IWant = \"");
             
-            #line 21 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 21 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.Story.IWant.Text));
             
             #line default
             #line hidden
             this.Write("\";\r\n            SoThat = \"");
             
-            #line 22 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 22 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.Story.SoThat.Text));
             
             #line default
             #line hidden
             this.Write("\";\r\n        }\r\n    }\r\n");
             
-            #line 25 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 25 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
 
     foreach (var scenario in this.Story.Scenarios)
     {
@@ -91,28 +91,28 @@ namespace com.bjss.generator.Templates
             #line hidden
             this.Write("    public class ");
             
-            #line 29 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 29 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(scenario.Title.Text, "")));
             
             #line default
             #line hidden
             this.Write(" : ScenarioFor<");
             
-            #line 29 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 29 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.StoryDoc.Target));
             
             #line default
             #line hidden
             this.Write(",  ");
             
-            #line 29 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 29 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(this.Story.Title.Text, "")));
             
             #line default
             #line hidden
             this.Write(">\r\n    {\r\n");
             
-            #line 31 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 31 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
 
     foreach (var step in scenario.Steps)
     {
@@ -122,21 +122,21 @@ namespace com.bjss.generator.Templates
             #line hidden
             this.Write("        ");
             
-            #line 35 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 35 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetAttribute(step.Group, step.Addition, step.Text)));
             
             #line default
             #line hidden
             this.Write("public void ");
             
-            #line 35 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 35 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.GetFormatedName(step.Group, step.Addition, step.Text, "_")));
             
             #line default
             #line hidden
             this.Write("()\r\n        {\r\n            throw new NotImplementedException();\r\n        }\r\n\r\n");
             
-            #line 40 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 40 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
         
     }
 
@@ -145,7 +145,7 @@ namespace com.bjss.generator.Templates
             #line hidden
             this.Write("    }\r\n\r\n");
             
-            #line 45 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+            #line 45 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
         
     }
 
@@ -156,7 +156,7 @@ namespace com.bjss.generator.Templates
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 49 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+        #line 49 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
 
 	private Regex CSharpIdentifierValidation 
 	{
@@ -236,14 +236,14 @@ namespace com.bjss.generator.Templates
         #line default
         #line hidden
         
-        #line 1 "C:\Dev\GitHub\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
+        #line 1 "D:\Apps\github\bjss\SpecGen\src\PoC\Templates\SpecGenTemplate.tt"
 
-private global::com.bjss.generator.Model.StoryNode _StoryField;
+private global::SpecGen.Model.StoryNode _StoryField;
 
 /// <summary>
 /// Access the Story parameter of the template.
 /// </summary>
-private global::com.bjss.generator.Model.StoryNode Story
+private global::SpecGen.Model.StoryNode Story
 {
     get
     {
@@ -251,12 +251,12 @@ private global::com.bjss.generator.Model.StoryNode Story
     }
 }
 
-private global::com.bjss.generator.Model.StoryDocument _StoryDocField;
+private global::SpecGen.Model.StoryDocument _StoryDocField;
 
 /// <summary>
 /// Access the StoryDoc parameter of the template.
 /// </summary>
-private global::com.bjss.generator.Model.StoryDocument StoryDoc
+private global::SpecGen.Model.StoryDocument StoryDoc
 {
     get
     {
@@ -275,7 +275,7 @@ public virtual void Initialize()
 bool StoryValueAcquired = false;
 if (this.Session.ContainsKey("Story"))
 {
-    this._StoryField = ((global::com.bjss.generator.Model.StoryNode)(this.Session["Story"]));
+    this._StoryField = ((global::SpecGen.Model.StoryNode)(this.Session["Story"]));
     StoryValueAcquired = true;
 }
 if ((StoryValueAcquired == false))
@@ -283,13 +283,13 @@ if ((StoryValueAcquired == false))
     object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Story");
     if ((data != null))
     {
-        this._StoryField = ((global::com.bjss.generator.Model.StoryNode)(data));
+        this._StoryField = ((global::SpecGen.Model.StoryNode)(data));
     }
 }
 bool StoryDocValueAcquired = false;
 if (this.Session.ContainsKey("StoryDoc"))
 {
-    this._StoryDocField = ((global::com.bjss.generator.Model.StoryDocument)(this.Session["StoryDoc"]));
+    this._StoryDocField = ((global::SpecGen.Model.StoryDocument)(this.Session["StoryDoc"]));
     StoryDocValueAcquired = true;
 }
 if ((StoryDocValueAcquired == false))
@@ -297,7 +297,7 @@ if ((StoryDocValueAcquired == false))
     object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("StoryDoc");
     if ((data != null))
     {
-        this._StoryDocField = ((global::com.bjss.generator.Model.StoryDocument)(data));
+        this._StoryDocField = ((global::SpecGen.Model.StoryDocument)(data));
     }
 }
 

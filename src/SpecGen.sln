@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoC", "PoC\PoC.csproj", "{3D7CDF7B-04C2-46CC-A97C-CD25E2F3715E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proof of Concept", "Proof of Concept", "{CD70FCC3-B2E1-4C66-927B-2216420DBF51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecGen", "SpecGen\SpecGen.csproj", "{3D7CDF7B-04C2-46CC-A97C-CD25E2F3715E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,8 +18,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3D7CDF7B-04C2-46CC-A97C-CD25E2F3715E} = {CD70FCC3-B2E1-4C66-927B-2216420DBF51}
 	EndGlobalSection
 EndGlobal

@@ -8,18 +8,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml;
-using com.bjss.generator.Model;
-using com.bjss.generator.Templates;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MahApps.Metro.Controls;
+using SpecGen.Model;
+using SpecGen.Templates;
 
-namespace Test
+namespace SpecGen
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

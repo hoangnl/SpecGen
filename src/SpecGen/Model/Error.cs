@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace com.bjss.generator.Model
+namespace SpecGen.Model
 {
     [DebuggerDisplay("{Severity} = {Message}")]
     public class Error

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Test {
+namespace SpecGen {
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>
